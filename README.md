@@ -1,11 +1,11 @@
----
 
 # WordPress Website Deployment on AWS
 
+
+### Project Overview
+
 Welcome to the README file for hosting a WordPress website on Amazon Web Services (AWS)! This project uses AWS resources and deployment scripts to facilitate the setup and management of a WordPress site.
 
-
-###Project Overview
 
 
 ## Architecture Overview
@@ -71,15 +71,20 @@ The project contains the following key components and steps:
 
 ### WordPress Installation Script
 
-This script installs WordPress on an EC2 instance. It performs the following actions:
+This script installs WordPress on an EC2 instance and performs the following actions:
 
-    -Updates the software packages on the EC2 instance.
-    -Creates an HTML directory and mounts Amazon EFS to store web files.
-    -Installs Apache web server, PHP, MySQL server, and necessary PHP extensions for WordPress.
-    -Downloads WordPress files, extracts them, configures wp-config.php, and restarts the webserver.
+ Updates the software packages on the EC2 instance.
 
-```bash
-#!/bin/bash
+Creates an HTML directory and mounts Amazon EFS to store web files.
+
+Installs Apache web server, PHP, MySQL server, and necessary PHP extensions for WordPress.
+
+Downloads WordPress files, extracts them, configures wp-config.php, and restarts the webserver.
+
+```bash 
+
+# create to root user
+sudo su
 
 # Update the software packages on the EC2 instance 
 sudo yum update -y
@@ -153,16 +158,20 @@ sudo vi /var/www/html/wp-config.php
 
 # Restart the webserver
 sudo service httpd restart
+```
 
 
-### Auto Scaling Group Launch Template Script (auto_scaling_setup.sh)
+### Auto Scaling Group Launch Template Script
 
 This script sets up an Auto Scaling Group launch template. It performs the following actions:
 
-    Updates the software packages on the EC2 instance.
-    Installs Apache web server, PHP, MySQL server, and necessary PHP extensions for WordPress.
-    Mounts Amazon EFS to store web files, sets permissions, and restarts the webserver.
+Updates the software packages on the EC2 instance.
 
+Installs Apache web server, PHP, MySQL server, and necessary PHP extensions for WordPress.
+
+Mounts Amazon EFS to store web files, sets permissions, and restarts the webserver.
+
+```bash 
 #!/bin/bash
 
 # Update the software packages on the EC2 instance 
@@ -220,22 +229,32 @@ chown apache:apache -R /var/www/html
 
 # Restart the webserver
 sudo service httpd restart
-
+```
 
 ## Getting Started
 
 To deploy the WordPress website on AWS, follow these steps:
 
-    Clone the GitHub repository containing the deployment scripts and configuration files.
-    Ensure you have an AWS account with appropriate permissions.
-    Modify the scripts as per your requirements, replacing placeholders like EFS_DNS_NAME with actual values specific to your AWS environment.
-    Run the scripts on the respective EC2 instances as described in the repository.
+1.) Clone the GitHub repository containing the deployment scripts and configuration files.
+ 
+2.) Ensure you have an AWS account with appropriate permissions.
 
-Note: Remember to replace placeholders like "EFS_DNS_NAME" with the EFS Name specific to your AWS environment.
+3.) Refer to the AWS documentation to create the required resources (VPC, subnets, etc.) as outlined in the Architecture Overview.
+
+4.) Use the scripts to set up the WordPress application on EC2 instances within the VPC. 
+
+5.) Modify the scripts as per your requirements, replacing placeholders like EFS_DNS_NAME with actual values specific to your AWS environment.
+
+6.) Configure the Auto Scaling Group, Load Balancer, and other services as shown in the architecture.
+
+7.) Access the WordPress website through the Load Balancer's DNS name.
+
+
+Note: Remember to replace placeholders like "EFS_DNS_NAME" with the EFS Name specific to your AWS environment!
 
 ## Contributions
 
-If you have any recommendations or contributions please do not hesiate to fork the repository and submit a pull request with your enhancements!
+If you have any recommendations or contributions please do not hesiate to fork the repository and submit a pull request with your improvements!
 
 ## Support
 
